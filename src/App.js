@@ -1,3 +1,4 @@
+import AppHeader from './components/AppHeader';
 import Login from './components/Login';
 import Eventlite from './components/Eventlite';
 
@@ -10,6 +11,7 @@ const currentUser = function() {
 function App() {
   return (
     <div className="App">
+      <AppHeader />
       {currentUser() ? <Eventlite /> : <Login />}
     </div>
   );

@@ -108,18 +108,12 @@ class Eventlite extends React.Component {
     const events = [...this.state.events, event].sort(function(a, b) {
       return new Date(a.start_datetime) - new Date(b.start_datetime);
     });
-    this.setState({ events: events }, this.changeLogoColour);
-  }
-
-  changeLogoColour = () => {
-    const colors = ['red', 'blue', 'green', 'violet'];
-    this.logo.current.style.color = colors[Math.floor(Math.random() * colors.length)];
+    this.setState({ events: events });
   }
 
   render() {
     return (
       <div>
-        <h1 className="logo" ref={this.logo}>Eventlite</h1>
         <FormErrors formErrors={this.state.formErrors} />
         <EventForm handleInput={this.handleInput} 
           handleSubmit={this.handleSubmit}
