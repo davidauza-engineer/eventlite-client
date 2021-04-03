@@ -27,7 +27,9 @@ class App extends React.Component {
     return (
     <div className="App">
       <AppHeader logoColor={this.state.logoColor} />
-      {this.currentUser() ? <Eventlite changeLogoColour={this.changeLogoColour}/> : <><Login /><SignUp /></> }
+      {this.currentUser() ? 
+        <Eventlite changeLogoColour={this.changeLogoColour}/> : 
+        <><Login /><SignUp /></> }
     </div>
   );
   }
