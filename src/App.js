@@ -1,20 +1,35 @@
+import React from 'react';
 import AppHeader from './components/AppHeader';
 import Login from './components/Login';
 import Eventlite from './components/Eventlite';
 
-const currentUser = function() {
-  const user = localStorage.getItem('user');
-  console.log(user);
-  return user;
-};
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      logoColor: 'black'
+    }
+  }
 
-function App() {
-  return (
+  currentUser = () => {
+    const user = localStorage.getItem('user');
+    console.log(user);
+    return user;
+  };
+
+  changeLogoColour = () => {
+    const colors = ['red', 'blue', 'green', 'violet'];
+    this.setState({ ...this.state, logoColor: colors[Math.floor(Math.random() * colors.length)] });
+  }
+
+  render() {
+    return (
     <div className="App">
-      <AppHeader />
-      {currentUser() ? <Eventlite /> : <Login />}
+      <AppHeader logoColor={this.state.logoColor} />
+      {this.currentUser() ? <Eventlite changeLogoColour={this.changeLogoColour}/> : <Login />}
     </div>
   );
+  }
 }
 
 export default App;

@@ -108,7 +108,7 @@ class Eventlite extends React.Component {
     const events = [...this.state.events, event].sort(function(a, b) {
       return new Date(a.start_datetime) - new Date(b.start_datetime);
     });
-    this.setState({ events: events });
+    this.setState({ events: events }, this.props.changeLogoColour);
   }
 
   render() {
