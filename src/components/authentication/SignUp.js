@@ -23,10 +23,11 @@ class SignUp extends React.Component {
     return(
       <div>
         <h2>Sign Up</h2>
-        <form onSubmit={this.handleSignUp} >
-          <input name="email" ref={(input) => this.email = input } />
+        <form id='signUpForm' onSubmit={this.handleSignUp} >
+          <input name="email" ref={(input) => this.email = input } onChange={this.props.fieldValidation} />
           <input name="password" type="password"
-                 ref={(input) => this.password = input } />
+                 ref={(input) => this.password = input }
+                 onChange={this.props.fieldValidation} />
           <input type="submit" />
         </form>
       </div>  

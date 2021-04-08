@@ -1,7 +1,6 @@
 import React from 'react';
 import AppHeader from './components/AppHeader';
-import Login from './components/Login';
-import SignUp from './components/SignUp';
+import Authentication from './components/authentication/Authentication';
 import Eventlite from './components/Eventlite';
 
 class App extends React.Component {
@@ -29,7 +28,8 @@ class App extends React.Component {
       <AppHeader logoColor={this.state.logoColor} />
       {this.currentUser() ? 
         <Eventlite changeLogoColour={this.changeLogoColour}/> : 
-        <><Login /><SignUp /></> }
+        <><Authentication /></> 
+      }
     </div>
   );
   }

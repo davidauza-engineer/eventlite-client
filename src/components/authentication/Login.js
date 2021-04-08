@@ -30,9 +30,9 @@ class Login extends React.Component {
     return (
       <div>
         <h2>Log in</h2>
-        <form onSubmit={this.handleLogin}>
-          <input name="email" ref={(input) => this.email = input} />
-          <input name="password" type="password" ref={(input) => this.password = input} />
+        <form id="loginForm" onSubmit={this.handleLogin}>
+          <input name="email" ref={(input) => this.email = input} onChange={this.props.fieldValidation} />
+          <input name="password" type="password" ref={(input) => this.password = input} onChange={this.props.fieldValidation} />
           <input type="submit" value="Log in" />
         </form>
       </div>  
