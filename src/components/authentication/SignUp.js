@@ -28,7 +28,7 @@ class SignUp extends React.Component {
           <input name="password" type="password"
                  ref={(input) => this.password = input }
                  onChange={this.props.fieldValidation} />
-          <input type="submit" />
+          <input type="submit" value="Sign up" disabled={!this.props.valid} />
         </form>
       </div>  
     )

@@ -9,8 +9,18 @@ class Authentication extends React.Component {
     super(props);
     this.state = {
       formErrors: {
-        loginForm: {},
-        signUpForm: {}
+        loginForm: {
+          email: [],
+          password: []
+        },
+        signUpForm: {
+          email: [],
+          password: []
+        }
+      },
+      formValidity: {
+        loginForm: false,
+        signUpForm: false
       }
     }
   }
@@ -31,33 +41,38 @@ class Authentication extends React.Component {
 
   validateEmail = (email, form) => {
     const email_regexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let newState = {};
     if (!email_regexp.test(String(email).toLowerCase())) {
-      const newState = { formErrors: { ...this.state.formErrors, [form]: { ...this.state.formErrors[form], email: ['not in the proper format'] } } };
-      this.setState(newState);
+      newState = { formErrors: { ...this.state.formErrors, [form]: { ...this.state.formErrors[form], email: ['not in the proper format'] } } };
     } else {
-      const newState = { formErrors: { ...this.state.formErrors, [form]: { ...this.state.formErrors[form] } } };
+      newState = { formErrors: { ...this.state.formErrors, [form]: { ...this.state.formErrors[form] } } };
       delete newState.formErrors[form]['email'];
-      this.setState(newState);
     }
+    this.setState(newState, () => this.validateForm(form));
   }
 
   validatePassword = (password, form) => {
+    let newState = {};
     if (password.length < 8) {
-      const newState = { formErrors: { ...this.state.formErrors, [form]: { ...this.state.formErrors[form], password: ['must contain at least 8 characters'] } } };
-      this.setState(newState);
+      newState = { formErrors: { ...this.state.formErrors, [form]: { ...this.state.formErrors[form], password: ['must contain at least 8 characters'] } } };
     } else {
-      const newState = { formErrors: { ...this.state.formErrors, [form]: { ...this.state.formErrors[form] } } };
+      newState = { formErrors: { ...this.state.formErrors, [form]: { ...this.state.formErrors[form] } } };
       delete newState.formErrors[form]['password'];
-      this.setState(newState);
     }
+    this.setState(newState, () => this.validateForm(form));
+  }
+
+  validateForm = (form) => {
+    const newState = { formValidity: { ...this.state.formValidity, [form]: Object.keys(this.state.formErrors[form]).length === 0 } }
+    this.setState(newState);
   }
 
   render() {
     return (
       <div>
-        <Login fieldValidation={this.validateField} />
+        <Login fieldValidation={this.validateField} valid={this.state.formValidity.loginForm} />
         <AuthenticationFormErrors formErrors={this.state.formErrors.loginForm} />
-        <SignUp fieldValidation={this.validateField} />
+        <SignUp fieldValidation={this.validateField} valid={this.state.formValidity.signUpForm} />
         <AuthenticationFormErrors formErrors={this.state.formErrors.signUpForm} />
       </div>
     )
