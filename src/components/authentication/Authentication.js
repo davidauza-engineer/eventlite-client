@@ -80,17 +80,7 @@ class Authentication extends React.Component {
         password: password
       }
     })
-    .then(response => {
-      console.log(response);
-      localStorage.setItem('user', 
-        JSON.stringify({
-          'access-token': response.headers['access-token'],
-          'client': response.headers['client'],
-          'uid': response.data.data.uid
-        })
-      )
-      window.location = '/';
-    })
+    .then(response => this.loginUser(response))
     .catch(error => {
       const newState = { formErrors: { ...this.state.formErrors, [form]: error.response.data } };
       this.setState(newState);
@@ -107,18 +97,24 @@ class Authentication extends React.Component {
       url: 'http://localhost:3001/auth',
       data: { email: email, password: password }
     })
-    .then(response => {
-      localStorage.setItem('user', JSON.stringify({
-        'access-token': response.headers['access-token'],
-        'client': response.headers['client'],
-        'uid': response.data.data.uid
-      }));
-      window.location = '/';
-    })
+    .then(response => this.loginUser(response))
     .catch(error => {
       const newState = { formErrors: { ...this.state.formErrors, [form]: error.response.data.errors } };
       this.setState(newState);
     });
+  }
+
+  loginUser = (response) => {
+    localStorage.setItem('user',
+      JSON.stringify(
+        {
+          'access-token': response.headers['access-token'],
+          'client': response.headers['client'],
+          'uid': response.data.data.uid
+        }
+      )
+    );
+    window.location = '/';
   }
 
   render() {
