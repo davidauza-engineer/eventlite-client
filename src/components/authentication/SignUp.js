@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
 class SignUp extends React.Component {
@@ -33,6 +34,11 @@ class SignUp extends React.Component {
       </div>  
     )
   }
+}
+
+SignUp.propType = {
+  fieldValidation: PropTypes.func.isRequired,
+  valid: PropTypes.bool.isRequired
 }
 
 export default SignUp;

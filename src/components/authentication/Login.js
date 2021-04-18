@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
 class Login extends React.Component {
@@ -38,6 +39,11 @@ class Login extends React.Component {
       </div>  
     )
   }
+}
+
+Login.propTypes = {
+  fieldValidation: PropTypes.func.isRequired,
+  valid: PropTypes.bool.isRequired
 }
 
 export default Login;
