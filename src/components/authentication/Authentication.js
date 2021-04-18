@@ -69,12 +69,15 @@ class Authentication extends React.Component {
 
   handleLogin = (event) => {
     event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    const form = event.target.id;
     axios({
       method: 'POST',
       url: 'http://localhost:3001/auth/sign_in',
       data: {
-        email: this.email.value,
-        password: this.password.value
+        email: email,
+        password: password
       }
     })
     .then(response => {
@@ -87,15 +90,22 @@ class Authentication extends React.Component {
         })
       )
       window.location = '/';
+    })
+    .catch(error => {
+      const newState = { formErrors: { ...this.state.formErrors, [form]: error.response.data } };
+      this.setState(newState);
     });
   }
 
   handleSignUp = (event) => {
     event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    const form = event.target.id;
     axios({
       method: 'POST',
       url: 'http://localhost:3001/auth',
-      data: { email: this.email.value, password: this.password.value }
+      data: { email: email, password: password }
     })
     .then(response => {
       localStorage.setItem('user', JSON.stringify({
@@ -105,6 +115,10 @@ class Authentication extends React.Component {
       }));
       window.location = '/';
     })
+    .catch(error => {
+      const newState = { formErrors: { ...this.state.formErrors, [form]: error.response.data.errors } };
+      this.setState(newState);
+    });
   }
 
   render() {
