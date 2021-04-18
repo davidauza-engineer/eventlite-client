@@ -21,6 +21,10 @@ class Authentication extends React.Component {
       formValidity: {
         loginForm: false,
         signUpForm: false
+      },
+      submitPerformed: {
+        loginForm: false,
+        signUpForm: false
       }
     }
   }
@@ -29,6 +33,11 @@ class Authentication extends React.Component {
     event.preventDefault();
     const formName = event.target.parentElement.id;
     const value = event.target.value;
+    if (this.state.submitPerformed[formName]) {
+      this.state.formErrors[formName] = {};
+      const newState = { submitPerformed: { ...this.state.submitPerformed, [formName]: false } }
+      this.setState(newState);
+    }
     switch(event.target.name) {
       case 'email':
         this.validateEmail(value, formName);
@@ -72,6 +81,7 @@ class Authentication extends React.Component {
     const email = event.target.email.value;
     const password = event.target.password.value;
     const form = event.target.id;
+    this.performSubmit(form);
     axios({
       method: 'POST',
       url: 'http://localhost:3001/auth/sign_in',
@@ -92,6 +102,7 @@ class Authentication extends React.Component {
     const email = event.target.email.value;
     const password = event.target.password.value;
     const form = event.target.id;
+    this.performSubmit(form);
     axios({
       method: 'POST',
       url: 'http://localhost:3001/auth',
@@ -115,6 +126,11 @@ class Authentication extends React.Component {
       )
     );
     window.location = '/';
+  }
+
+  performSubmit = (form) => {
+    const newState = { submitPerformed: { ...this.state.submitPerformed, [form]: true } };
+    this.setState(newState)
   }
 
   render() {
