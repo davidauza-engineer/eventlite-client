@@ -1,7 +1,9 @@
 import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import AppHeader from './components/AppHeader';
 import Authentication from './components/authentication/Authentication';
 import Eventlite from './components/Eventlite';
+import PasswordResetPasswords from './components/authentication/password_reset/PasswordResetPasswords';
 
 class App extends React.Component {
   constructor(props) {
@@ -24,14 +26,22 @@ class App extends React.Component {
 
   render() {
     return (
-    <div className="App">
-      <AppHeader logoColor={this.state.logoColor} />
-      {this.currentUser() ? 
-        <Eventlite changeLogoColour={this.changeLogoColour}/> : 
-        <Authentication />
-      }
-    </div>
-  );
+      <Router>
+        <div className="App">
+          <AppHeader logoColor={this.state.logoColor} />
+          <Route path='/' exact render={(props) => (
+            <>
+              {this.currentUser() ? 
+                <Eventlite changeLogoColour={this.changeLogoColour}/> : 
+                <Authentication />
+              }
+            </>
+          )}
+          />
+          <Route path='/password_reset' component={PasswordResetPasswords} />
+        </div>
+      </Router>
+    );
   }
 }
 
